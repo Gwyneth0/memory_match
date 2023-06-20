@@ -28,7 +28,7 @@ export class Cards extends Component {
     @property(Results)
     private results: Results;
 
-    private countdown: number = 30;
+    private countdown: number = 20;
 
     private flippedCard: Button = null;
     private matchedCards: Button[] = [];
@@ -154,7 +154,7 @@ export class Cards extends Component {
                         } else {
                             this.currentLevel++;
                             this.cardsPerLevel += 2;
-                            this.countdown = 30;
+                            this.countdown = 20;
                             this.totalMatches = 0;
                             this.node.removeAllChildren();
                             this.createGrid();
@@ -162,7 +162,7 @@ export class Cards extends Component {
                             this.startCountdown();
                         }
                     }
-                }, 300);
+                }, 200);
                 this.saveCard = [];
             } else {
                 console.log('incorrect');
