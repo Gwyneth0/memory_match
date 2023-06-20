@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, director, Label, Node } from 'cc';
+import { _decorator, Button, Component, director, Label, Node, Sprite } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Results')
@@ -12,7 +12,7 @@ export class Results extends Component {
 
     @property(Node)
     private game_win: Node;
-
+    
     public showResults(): void {
         this.show_ui.active = true;
     }
@@ -36,8 +36,5 @@ export class Results extends Component {
     public hide_win_Game():void{
         this.game_win.active = false;
     }
-
-
-
 }
 

@@ -1,5 +1,6 @@
-import { _decorator, Button, Component, director, Label, Node, TERRAIN_HEIGHT_BASE } from 'cc';
+import { _decorator, Button, Component, director, Label, Node, Sprite, TERRAIN_HEIGHT_BASE } from 'cc';
 import { audioSouce } from './audioSouce';
+import { Cards } from './Cards';
 const { ccclass, property } = _decorator;
 
 @ccclass('gameController')
@@ -13,6 +14,7 @@ export class gameController extends Component {
 
     @property(Button)
     private restart: Button;
+
 
     @property(Button)
     private pasue: Button;
@@ -29,31 +31,37 @@ export class gameController extends Component {
     @property(Label)
     private lb_Score: Label;
 
+    @property(Node)
+    private blackoutLayer: Node = null;
+
     private currentScore: number = 0;
 
     protected onLoad(): void {
         this.back_home.node.on(Node.EventType.TOUCH_END, this.backHome);
         this.restart.node.on(Node.EventType.TOUCH_END, this.restart_Game);
+
     }
 
     protected backHome(): void {
         director.loadScene('menu');
     }
-   
-    protected restart_Game(){
+
+    protected restart_Game() {
         director.loadScene('game');
     }
 
-    protected btnResumeGame(): void {
+    public btnResumeGame(): void {
         director.resume();
+        this.blackoutLayer.active = true;
         this.pasue.node.active = false;
         this.unpause.node.active = true;
     }
-    
-    protected btnPauseGame(): void {
+
+    public btnPauseGame(): void {
         this.pasue.node.active = true;
         this.unpause.node.active = false;
         director.pause();
+        this.blackoutLayer.active = false;
     }
 
     protected btnOnSound(): void {
@@ -79,7 +87,7 @@ export class gameController extends Component {
         this.update_Score(this.currentScore += 2);
     }
 
-    public reset_Score(){
+    public reset_Score() {
         this.update_Score(0);
         this.lb_Score.string = this.currentScore.toString();
     }

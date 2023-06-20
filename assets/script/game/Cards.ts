@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, instantiate, Prefab, Sprite, SpriteFrame, Button, EventHandler, Label, director } from 'cc';
+import { _decorator, Component, Node, instantiate, Prefab, Sprite, SpriteFrame, Button, EventHandler, Label, director, ButtonComponent } from 'cc';
 import { Results } from './Results';
 import { audioSouce } from './audioSouce';
 import { gameController } from './gameController';
@@ -28,9 +28,9 @@ export class Cards extends Component {
     @property(Results)
     private results: Results;
 
-    private countdown: number = 20;
+    private countdown: number =15;
 
-    private flippedCard: Button = null;
+    public flippedCard: Button = null;
     private matchedCards: Button[] = [];
 
     private countClick: number = 0;
@@ -48,12 +48,12 @@ export class Cards extends Component {
     }
 
     protected startCountdown(): void {
-        this.schedule(this.updateTimerLabel, 1, this.countdown);
+        this.schedule(this.updateTimerLabel,1);
     }
 
     protected updateTimerLabel(): void {
         this.timerLabel.string = this.countdown.toString();
-        this.countdown--;
+        this.countdown --;
         if (this.countdown < 0) {
             this.unschedule(this.updateTimerLabel);
             this.results.showResults();
@@ -133,7 +133,6 @@ export class Cards extends Component {
             this.audio.sound_Card();
             if (this.saveCard[0] === this.saveCard[1]) {
                 setTimeout(() => {
-                    console.log('correct');
                     this.gameCtrl.add_Score();
                     buttonComponent.interactable = false;
                     this.flippedCard.interactable = false;
@@ -145,16 +144,14 @@ export class Cards extends Component {
                     this.totalMatches++;
                     this.audio.sound_Point();
                     if (this.totalMatches === this.cardsPerLevel / 2) {
-                        console.log('Game completed!');
                         if (this.currentLevel === this.maxLevel) {
-                            console.log('final level!');
                             this.results.show_win_Game();
                             this.audio.sound_Win();
                             director.pause();
                         } else {
                             this.currentLevel++;
                             this.cardsPerLevel += 2;
-                            this.countdown = 20;
+                            this.countdown = 15;
                             this.totalMatches = 0;
                             this.node.removeAllChildren();
                             this.createGrid();
@@ -162,10 +159,9 @@ export class Cards extends Component {
                             this.startCountdown();
                         }
                     }
-                }, 200);
+                }, 150);
                 this.saveCard = [];
             } else {
-                console.log('incorrect');
                 this.saveCard = [];
                 setTimeout(() => {
                     spriteComponent.spriteFrame = this.bg;
@@ -173,7 +169,7 @@ export class Cards extends Component {
                     buttonComponent.interactable = true;
                     this.flippedCard.interactable = true;
                     this.flippedCard = null;
-                }, 300);
+                }, 150);
             }
         } else {
             this.flippedCard = buttonComponent;
