@@ -20,7 +20,7 @@ export class Cards extends Component {
     private cardImages: SpriteFrame[] = [];
 
     @property(Prefab)
-    private buttonPrefab: Prefab = null;
+    public buttonPrefab: Prefab = null;
 
     @property(Label)
     private timerLabel: Label;
@@ -31,7 +31,7 @@ export class Cards extends Component {
     private countdown: number =15;
 
     public flippedCard: Button = null;
-    private matchedCards: Button[] = [];
+    public matchedCards: Button[] = [];
 
     private countClick: number = 0;
     private saveCard: number[] = [];
@@ -57,6 +57,7 @@ export class Cards extends Component {
         if (this.countdown < 0) {
             this.unschedule(this.updateTimerLabel);
             this.results.showResults();
+            this.gameCtrl.gameOver();
             this.audio.sound_Lose();
         }
     }
@@ -128,6 +129,9 @@ export class Cards extends Component {
         this.countClick++;
         this.saveCard.push(cardIndex);
         this.audio.sound_Card();
+        if(buttonComponent.interactable){
+            buttonComponent.interactable = false;
+        }
         if (this.countClick === 2) {
             this.countClick = 0;
             this.audio.sound_Card();

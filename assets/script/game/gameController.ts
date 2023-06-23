@@ -1,20 +1,23 @@
 import { _decorator, Button, Component, director, Label, Node, Sprite, TERRAIN_HEIGHT_BASE } from 'cc';
 import { audioSouce } from './audioSouce';
 import { Cards } from './Cards';
+import { Results } from './Results';
 const { ccclass, property } = _decorator;
 
 @ccclass('gameController')
 export class gameController extends Component {
+
+    @property(Cards)
+    private Card: Cards;
+
+    @property(Results)
+    private Results: Results;
 
     @property(audioSouce)
     private audio: audioSouce;
 
     @property(Button)
     private back_home: Button;
-
-    @property(Button)
-    private restart: Button;
-
 
     @property(Button)
     private pasue: Button;
@@ -31,16 +34,7 @@ export class gameController extends Component {
     @property(Label)
     private lb_Score: Label;
 
-    @property(Node)
-    private blackoutLayer: Node = null;
-
     private currentScore: number = 0;
-
-    protected onLoad(): void {
-        this.back_home.node.on(Node.EventType.TOUCH_END, this.backHome);
-        this.restart.node.on(Node.EventType.TOUCH_END, this.restart_Game);
-
-    }
 
     protected backHome(): void {
         director.loadScene('menu');
@@ -50,9 +44,16 @@ export class gameController extends Component {
         director.loadScene('game');
     }
 
+    public gameOver() {
+        this.off_sound.interactable = false;
+        this.on_sound.interactable = false;
+        this.back_home.interactable = false;
+        this.pasue.interactable = false;
+        this.unpause.interactable = false;
+    }
+
     public btnResumeGame(): void {
         director.resume();
-        this.blackoutLayer.active = true;
         this.pasue.node.active = false;
         this.unpause.node.active = true;
     }
@@ -61,7 +62,6 @@ export class gameController extends Component {
         this.pasue.node.active = true;
         this.unpause.node.active = false;
         director.pause();
-        this.blackoutLayer.active = false;
     }
 
     protected btnOnSound(): void {
@@ -83,7 +83,6 @@ export class gameController extends Component {
 
     public add_Score() {
         console.log(this.currentScore);
-
         this.update_Score(this.currentScore += 2);
     }
 
