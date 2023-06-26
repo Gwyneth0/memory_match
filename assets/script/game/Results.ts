@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, director, Label, Node, Sprite } from 'cc';
+import { _decorator, BlockInputEvents, Button, Color, Component, director, Label, Node, Sprite, v3, Vec3, view } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Results')
@@ -13,6 +13,9 @@ export class Results extends Component {
     @property(Node)
     private game_win: Node;
     
+    @property(Node)
+    private bg_game_over: Node;
+
     public showResults(): void {
         this.show_ui.active = true;
     }
@@ -29,12 +32,15 @@ export class Results extends Component {
         director.loadScene('menu');
     }
 
+  
     public show_win_Game(): void{
         this.game_win.active = true;
+        this.bg_game_over.active = true;
     }
 
     public hide_win_Game():void{
         this.game_win.active = false;
-    }
+        this.bg_game_over.active =false;
+    }   
 }
 

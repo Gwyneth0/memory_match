@@ -28,7 +28,7 @@ export class Cards extends Component {
     @property(Results)
     private results: Results;
 
-    private countdown: number =15;
+    private countdown: number = 15;
 
     public flippedCard: Button = null;
     public matchedCards: Button[] = [];
@@ -48,12 +48,12 @@ export class Cards extends Component {
     }
 
     protected startCountdown(): void {
-        this.schedule(this.updateTimerLabel,1);
+        this.schedule(this.updateTimerLabel, 1);
     }
 
     protected updateTimerLabel(): void {
         this.timerLabel.string = this.countdown.toString();
-        this.countdown --;
+        this.countdown--;
         if (this.countdown < 0) {
             this.unschedule(this.updateTimerLabel);
             this.results.showResults();
@@ -129,7 +129,7 @@ export class Cards extends Component {
         this.countClick++;
         this.saveCard.push(cardIndex);
         this.audio.sound_Card();
-        if(buttonComponent.interactable){
+        if (buttonComponent.interactable) {
             buttonComponent.interactable = false;
         }
         if (this.countClick === 2) {
