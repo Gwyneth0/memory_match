@@ -20,7 +20,13 @@ export class Cards extends Component {
     private cardImages: SpriteFrame[] = [];
 
     @property(Prefab)
-    public buttonPrefab: Prefab = null;
+    private ButtonPrefab: Prefab = null;
+    public get buttonPrefab(): Prefab {
+        return this.ButtonPrefab;
+    }
+    public set buttonPrefab(value: Prefab) {
+        this.ButtonPrefab = value;
+    }
 
     @property(Label)
     private timerLabel: Label;
@@ -30,8 +36,20 @@ export class Cards extends Component {
 
     private countdown: number = 30;
 
-    public flippedCard: Button = null;
-    public matchedCards: Button[] = [];
+    private FlippedCard: Button = null;
+    public get flippedCard(): Button {
+        return this.FlippedCard;
+    }
+    public set flippedCard(value: Button) {
+        this.FlippedCard = value;
+    }
+    private MatchedCards: Button[] = [];
+    public get matchedCards(): Button[] {
+        return this.MatchedCards;
+    }
+    public set matchedCards(value: Button[]) {
+        this.MatchedCards = value;
+    }
 
     private countClick: number = 0;
     private saveCard: number[] = [];

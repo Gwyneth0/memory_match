@@ -53,7 +53,7 @@ export class audioSouce extends Component {
     public off_Sound() {
         this.soundOn = false;
         this.audioSource.volume = 0;
-        this.gameCtrl.on_sound.node.active = false;
+        this.gameCtrl.On_sound.node.active = false;
         sys.localStorage.setItem(this.localStorageKey, JSON.stringify(this.soundOn));
     }
 

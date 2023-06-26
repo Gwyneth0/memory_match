@@ -2131,6 +2131,9 @@
     "overlaySprite": {
       "__id__": 12
     },
+    "home": {
+      "__id__": 43
+    },
     "pau": {
       "__id__": 61
     },
@@ -2246,7 +2249,10 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "_clip": null,
+    "_clip": {
+      "__uuid__": "1a81bb73-2645-4972-bd1b-7d4a0522cd5f",
+      "__expectedType__": "cc.AudioClip"
+    },
     "_loop": false,
     "_playOnAwake": true,
     "_volume": 1,

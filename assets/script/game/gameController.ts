@@ -20,10 +20,22 @@ export class gameController extends Component {
     private unpause: Button;
 
     @property(Button)
-    public on_sound: Button;
+    private on_sound: Button;
+    public get On_sound(): Button {
+        return this.on_sound;
+    }
+    public set On_sound(value: Button) {
+        this.on_sound = value;
+    }
 
     @property(Button)
-    public off_sound: Button;
+    private Off_sound: Button;
+    public get off_sound(): Button {
+        return this.Off_sound;
+    }
+    public set off_sound(value: Button) {
+        this.Off_sound = value;
+    }
 
     @property(Label)
     private lb_Score: Label;
@@ -31,7 +43,16 @@ export class gameController extends Component {
     private currentScore: number = 0;
 
     @property(Sprite)
-    public overlaySprite: Sprite = null;
+    private OverlaySprite: Sprite = null;
+    public get overlaySprite(): Sprite {
+        return this.OverlaySprite;
+    }
+    public set overlaySprite(value: Sprite) {
+        this.OverlaySprite = value;
+    }
+
+    @property(Node)
+    private home: Node;
 
     private isOverlayVisible: boolean = false;
 
@@ -78,13 +99,14 @@ export class gameController extends Component {
         this.node.addChild(overlayNode);
     }
 
-
     public gameOver() {
         this.off_sound.interactable = false;
         this.on_sound.interactable = false;
         this.back_home.interactable = false;
         this.pasue.interactable = false;
         this.unpause.interactable = false;
+        this.back_home.node.active = false;
+        this.home.active = false;
         this.createOverlayLayer();
 
     }
