@@ -28,7 +28,7 @@ export class Cards extends Component {
     @property(Results)
     private results: Results;
 
-    private countdown: number = 15;
+    private countdown: number = 30;
 
     public flippedCard: Button = null;
     public matchedCards: Button[] = [];
@@ -37,9 +37,9 @@ export class Cards extends Component {
     private saveCard: number[] = [];
 
     private currentLevel: number = 1;
-    private cardsPerLevel: number = 8;
+    private cardsPerLevel: number = 10;
     private totalMatches: number = 0;
-    private maxLevel: number = 5;
+    private maxLevel: number = 8;
 
     protected onLoad(): void {
         this.createGrid();
@@ -92,13 +92,20 @@ export class Cards extends Component {
             doubledIndices.push(indices[i % (this.cardsPerLevel / 2)]);
         }
         this.shuffleArray(doubledIndices);
-        const itemsPerRow = 4;
+        const itemsPerRow = 5;
         let rowNum = 0;
         let colNum = 0;
+        const cellWidth = 80;
+        const cellHeight = 80;
+        const totalWidth = cellWidth * itemsPerRow;
+        const totalHeight = cellHeight * Math.ceil(this.cardsPerLevel / itemsPerRow);
+        const offsetX = -totalWidth / 2 + cellWidth / 2;
+        const offsetY = totalHeight / 2 - cellHeight / 2;
+
         for (let i = 0; i < this.cardsPerLevel; i++) {
             const buttonNode = instantiate(this.buttonPrefab);
-            const posX = colNum * 120 - 180;
-            const posY = rowNum * -120 + 180;
+            const posX = colNum * cellWidth + offsetX;
+            const posY = rowNum * -cellHeight + offsetY;
             buttonNode.setPosition(posX, posY);
             this.node.addChild(buttonNode);
             const buttonComponent = buttonNode.getComponent(Button);
@@ -155,7 +162,7 @@ export class Cards extends Component {
                         } else {
                             this.currentLevel++;
                             this.cardsPerLevel += 2;
-                            this.countdown = 15;
+                            this.countdown = 30;
                             this.totalMatches = 0;
                             this.node.removeAllChildren();
                             this.createGrid();
